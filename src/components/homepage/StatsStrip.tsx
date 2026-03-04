@@ -20,8 +20,8 @@ export function StatsStrip({ memberCount, companyCount, eventCount, postCount }:
           {stats.map((stat, i) => (
             <div key={stat.label} className="text-center px-8 reveal" style={{ transitionDelay: `${i * 80}ms` }}>
               <div
-                className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight tabular-nums leading-none mb-2"
-                style={{ letterSpacing: '-0.04em' }}
+                className="text-[clamp(2.5rem,6vw,4rem)] font-bold tabular-nums leading-none mb-2"
+                style={{ fontFamily: 'var(--font-display), Georgia, serif', letterSpacing: '-0.02em' }}
               >
                 {stat.value}{stat.suffix}
               </div>

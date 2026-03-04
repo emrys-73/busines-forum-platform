@@ -29,8 +29,8 @@ export function HeroSection() {
 
         {/* Main headline */}
         <h1
-          className="animate-fade-in-up opacity-0-init delay-100 text-[clamp(2.8rem,8vw,6rem)] font-bold tracking-tight leading-[1.05] mb-6"
-          style={{ letterSpacing: '-0.03em' }}
+          className="animate-fade-in-up opacity-0-init delay-100 text-[clamp(2.8rem,8vw,6rem)] font-bold leading-[1.05] mb-6"
+          style={{ fontFamily: 'var(--font-display), Georgia, serif', letterSpacing: '-0.01em' }}
         >
           Where faith meets
           <br />

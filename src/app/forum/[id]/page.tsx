@@ -50,7 +50,7 @@ export default async function ForumPostPage({ params }: PageProps) {
   const replyList = (replies as ForumReply[]) || []
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-3xl">
+    <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
       <article className="mb-8">
         <div className="flex flex-wrap gap-2 mb-4">
           {p.tags.map((tag) => (

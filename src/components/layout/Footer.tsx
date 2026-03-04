@@ -1,44 +1,75 @@
 import Link from 'next/link'
+import { Separator } from '@/components/ui/separator'
 
 export function Footer() {
   return (
-    <footer className="border-t mt-auto">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="font-semibold text-sm mb-3">GLC Munich Forum</h3>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              AI-powered community platform for Gospel Life Center Munich&apos;s business community.
+    <footer className="bg-background border-t border-border/50 mt-auto">
+      <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+          <div className="col-span-2 md:col-span-1">
+            <p className="text-sm font-semibold mb-3">GLC Munich</p>
+            <p className="text-[13px] text-muted-foreground leading-relaxed max-w-[200px]">
+              Where faith meets entrepreneurship. Community platform for GLC Munich's business forum.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-xs uppercase tracking-wider mb-3 text-muted-foreground">Community</h3>
-            <ul className="space-y-2">
-              <li><Link href="/members" className="text-sm hover:underline">Members</Link></li>
-              <li><Link href="/companies" className="text-sm hover:underline">Companies</Link></li>
-              <li><Link href="/events" className="text-sm hover:underline">Events</Link></li>
-              <li><Link href="/forum" className="text-sm hover:underline">Forum</Link></li>
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">Community</p>
+            <ul className="space-y-2.5">
+              {[
+                { href: '/members', label: 'Members' },
+                { href: '/companies', label: 'Companies' },
+                { href: '/events', label: 'Events' },
+                { href: '/forum', label: 'Forum' },
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="text-[13px] text-muted-foreground hover:text-foreground transition-colors hover-underline">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-xs uppercase tracking-wider mb-3 text-muted-foreground">Tools</h3>
-            <ul className="space-y-2">
-              <li><Link href="/tools/matchmaker" className="text-sm hover:underline">Matchmaker</Link></li>
-              <li><Link href="/tools/chat" className="text-sm hover:underline">Community Chat</Link></li>
-              <li><Link href="/tools/ecosystem-graph" className="text-sm hover:underline">Ecosystem Graph</Link></li>
-              <li><Link href="/tools/analytics" className="text-sm hover:underline">Analytics</Link></li>
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">Tools</p>
+            <ul className="space-y-2.5">
+              {[
+                { href: '/tools/matchmaker', label: 'Matchmaker' },
+                { href: '/tools/chat', label: 'Community Chat' },
+                { href: '/tools/ecosystem-graph', label: 'Ecosystem Graph' },
+                { href: '/tools/analytics', label: 'Analytics' },
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="text-[13px] text-muted-foreground hover:text-foreground transition-colors hover-underline">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-xs uppercase tracking-wider mb-3 text-muted-foreground">Account</h3>
-            <ul className="space-y-2">
-              <li><Link href="/auth/login" className="text-sm hover:underline">Sign In</Link></li>
-              <li><Link href="/profile" className="text-sm hover:underline">My Profile</Link></li>
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">Account</p>
+            <ul className="space-y-2.5">
+              {[
+                { href: '/auth/login', label: 'Sign In' },
+                { href: '/profile', label: 'My Profile' },
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="text-[13px] text-muted-foreground hover:text-foreground transition-colors hover-underline">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
-        <div className="border-t mt-8 pt-6 text-xs text-muted-foreground text-center">
-          © {new Date().getFullYear()} GLC Munich Business Forum · Built with love for the community
+        <Separator className="opacity-50 mb-8" />
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[12px] text-muted-foreground">
+            © {new Date().getFullYear()} Gospel Life Center Munich · Business Forum
+          </p>
+          <p className="text-[12px] text-muted-foreground">
+            Built with love for the community
+          </p>
         </div>
       </div>
     </footer>

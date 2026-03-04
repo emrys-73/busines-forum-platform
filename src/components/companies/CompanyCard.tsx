@@ -1,52 +1,51 @@
 import Link from 'next/link'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
 import { Company } from '@/types'
-import { Building2, Globe } from 'lucide-react'
+import { Building2, Globe, ArrowUpRight } from 'lucide-react'
 
-interface CompanyCardProps {
-  company: Company
-}
+interface CompanyCardProps { company: Company }
 
 export function CompanyCard({ company }: CompanyCardProps) {
   return (
-    <Link href={`/companies/${company.slug}`}>
-      <Card className="h-full hover:border-primary/50 hover:shadow-sm transition-all">
-        <CardHeader className="pb-3">
+    <Link href={`/companies/${company.slug}`} className="block group">
+      <div className="h-full rounded-3xl border border-border/60 bg-card p-6 transition-all duration-300 hover:border-border hover:shadow-xl hover:shadow-black/[0.06] hover:-translate-y-1 dark:hover:shadow-black/30">
+        <div className="flex items-start justify-between gap-3 mb-4">
           <div className="flex items-start gap-3">
             {company.logo_url ? (
-              <img src={company.logo_url} alt={company.name} className="w-10 h-10 rounded-lg object-contain border bg-background" />
+              <img src={company.logo_url} alt={company.name} className="w-12 h-12 rounded-2xl object-contain border border-border/60 bg-background p-1" />
             ) : (
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <Building2 className="h-5 w-5 text-primary" />
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-muted to-border flex items-center justify-center flex-shrink-0">
+                <Building2 className="h-5 w-5 text-muted-foreground" />
               </div>
             )}
             <div>
-              <CardTitle className="text-base">{company.name}</CardTitle>
-              {company.industry && (
-                <CardDescription className="text-xs">{company.industry}</CardDescription>
-              )}
+              <p className="font-semibold text-[15px] leading-snug">{company.name}</p>
+              {company.industry && <p className="text-[13px] text-muted-foreground mt-0.5">{company.industry}</p>}
             </div>
           </div>
-        </CardHeader>
-        <CardContent className="pt-0">
-          {company.description && (
-            <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{company.description}</p>
+          <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1" />
+        </div>
+
+        {company.description && (
+          <p className="text-[13px] text-muted-foreground line-clamp-2 leading-relaxed mb-4">{company.description}</p>
+        )}
+
+        <div className="flex items-center gap-3 flex-wrap">
+          {company.stage && (
+            <span className="text-[11px] px-2.5 py-1 rounded-full bg-muted text-muted-foreground font-semibold">
+              {company.stage}
+            </span>
           )}
-          <div className="flex flex-wrap items-center gap-2">
-            {company.stage && <Badge variant="secondary">{company.stage}</Badge>}
-            {company.founded_year && (
-              <span className="text-xs text-muted-foreground">Est. {company.founded_year}</span>
-            )}
-            {company.website_url && (
-              <span className="flex items-center gap-1 text-xs text-muted-foreground ml-auto">
-                <Globe className="h-3 w-3" />
-                Website
-              </span>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+          {company.founded_year && (
+            <span className="text-[12px] text-muted-foreground">Est. {company.founded_year}</span>
+          )}
+          {company.website_url && (
+            <span className="ml-auto flex items-center gap-1 text-[12px] text-muted-foreground">
+              <Globe className="h-3 w-3" /> Website
+            </span>
+          )}
+        </div>
+      </div>
     </Link>
   )
 }

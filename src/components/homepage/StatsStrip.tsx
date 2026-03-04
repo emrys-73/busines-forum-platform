@@ -7,20 +7,25 @@ interface StatsStripProps {
 
 export function StatsStrip({ memberCount, companyCount, eventCount, postCount }: StatsStripProps) {
   const stats = [
-    { label: 'Community Members', value: memberCount },
-    { label: 'Companies & Startups', value: companyCount },
-    { label: 'Events Hosted', value: eventCount },
-    { label: 'Forum Discussions', value: postCount },
+    { label: 'Community Members', value: memberCount, suffix: '+' },
+    { label: 'Companies & Startups', value: companyCount, suffix: '' },
+    { label: 'Events Hosted', value: eventCount, suffix: '' },
+    { label: 'Forum Discussions', value: postCount, suffix: '' },
   ]
 
   return (
-    <section className="border-y bg-muted/30">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <div className="text-3xl font-bold tabular-nums">{stat.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+    <section className="py-20 border-y border-border/50">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 md:divide-x divide-border/50">
+          {stats.map((stat, i) => (
+            <div key={stat.label} className="text-center px-8 reveal" style={{ transitionDelay: `${i * 80}ms` }}>
+              <div
+                className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight tabular-nums leading-none mb-2"
+                style={{ letterSpacing: '-0.04em' }}
+              >
+                {stat.value}{stat.suffix}
+              </div>
+              <div className="text-[13px] text-muted-foreground font-medium">{stat.label}</div>
             </div>
           ))}
         </div>

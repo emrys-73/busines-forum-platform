@@ -25,13 +25,15 @@ export default async function ForumPage() {
   const regular = all.filter((p) => !p.is_pinned)
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-3xl">
-      <div className="flex items-center justify-between mb-8">
+    <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
+      <div className="flex items-start justify-between mb-12 reveal">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Community Forum</h1>
-          <p className="text-muted-foreground">Ask questions, share ideas, and connect with members.</p>
+          <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
+            Community Forum
+          </h1>
+          <p className="text-[17px] text-muted-foreground font-light max-w-2xl">Ask questions, share ideas, and connect with members.</p>
         </div>
-        <Button asChild className="gap-2">
+        <Button asChild className="rounded-full px-5 h-9 text-[13px] bg-foreground text-background hover:opacity-80 transition-opacity">
           <Link href="/forum/new">
             <PenSquare className="h-4 w-4" />
             New Post

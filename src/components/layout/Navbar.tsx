@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ThemeToggle } from './ThemeToggle'
 import { MobileMenu } from './MobileMenu'
-import { Button } from '@/components/ui/button'
 import { useCurrentMember } from '@/hooks/useCurrentMember'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
+import { ChevronDown } from 'lucide-react'
 
 const navLinks = [
   { href: '/members', label: 'Members' },
@@ -39,6 +40,13 @@ export function Navbar() {
   const pathname = usePathname()
   const { member } = useCurrentMember()
   const router = useRouter()
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   async function handleSignOut() {
     const supabase = createClient()
@@ -48,82 +56,98 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 flex h-14 items-center justify-between">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="font-semibold text-sm tracking-tight">
-            GLC Munich Forum
-          </Link>
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
+    <header
+      className={cn(
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        scrolled
+          ? 'glass border-b border-black/[0.06] dark:border-white/[0.06]'
+          : 'bg-transparent'
+      )}
+    >
+      <div className="max-w-6xl mx-auto px-6 flex h-12 items-center justify-between">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="text-[13px] font-semibold tracking-tight text-foreground hover:opacity-70 transition-opacity"
+        >
+          GLC Munich
+        </Link>
+
+        {/* Nav links — desktop */}
+        <nav className="hidden md:flex items-center gap-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                'px-3 py-1.5 rounded-full text-[13px] transition-all duration-200',
+                pathname.startsWith(link.href)
+                  ? 'text-foreground font-medium'
+                  : 'text-muted-foreground hover:text-foreground'
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
                 className={cn(
-                  'px-3 py-1.5 rounded-md text-sm transition-colors hover:bg-accent',
-                  pathname.startsWith(link.href)
-                    ? 'bg-accent text-accent-foreground font-medium'
-                    : 'text-muted-foreground'
+                  'flex items-center gap-0.5 px-3 py-1.5 rounded-full text-[13px] transition-all duration-200',
+                  pathname.startsWith('/tools')
+                    ? 'text-foreground font-medium'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                {link.label}
-              </Link>
-            ))}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className={cn(
-                    'px-3 py-1.5 rounded-md text-sm transition-colors hover:bg-accent',
-                    pathname.startsWith('/tools')
-                      ? 'bg-accent text-accent-foreground font-medium'
-                      : 'text-muted-foreground'
-                  )}
-                >
-                  Tools
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                {toolLinks.map((link) => (
-                  <DropdownMenuItem key={link.href} asChild>
-                    <Link href={link.href}>{link.label}</Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </nav>
-        </div>
+                Tools
+                <ChevronDown className="h-3 w-3 mt-0.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="center" className="w-52 rounded-2xl p-1.5">
+              {toolLinks.map((link) => (
+                <DropdownMenuItem key={link.href} asChild>
+                  <Link href={link.href} className="rounded-xl text-[13px] cursor-pointer">{link.label}</Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </nav>
 
+        {/* Right side */}
         <div className="flex items-center gap-2">
           <ThemeToggle />
           {member ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="rounded-full ring-2 ring-transparent hover:ring-border transition-all">
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-7 w-7">
                     <AvatarImage src={member.avatar_url || undefined} alt={member.name} />
-                    <AvatarFallback>{member.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback className="text-xs">{member.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <div className="px-2 py-1.5 text-sm font-medium">{member.name}</div>
+              <DropdownMenuContent align="end" className="w-48 rounded-2xl p-1.5">
+                <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">{member.name}</div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/profile">My Profile</Link>
+                  <Link href="/profile" className="rounded-xl text-[13px] cursor-pointer">My Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={`/members/${member.id}`}>Public Profile</Link>
+                  <Link href={`/members/${member.id}`} className="rounded-xl text-[13px] cursor-pointer">Public Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
+                <DropdownMenuItem onClick={handleSignOut} className="rounded-xl text-[13px] text-destructive cursor-pointer">
                   Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild size="sm" variant="outline" className="hidden md:flex">
-              <Link href="/auth/login">Sign In</Link>
-            </Button>
+            <Link
+              href="/auth/login"
+              className="hidden md:flex text-[13px] text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Sign In
+            </Link>
           )}
           <MobileMenu />
         </div>

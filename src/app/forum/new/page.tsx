@@ -12,8 +12,8 @@ export default async function NewPostPage() {
   if (!user) redirect('/auth/login?redirectTo=/forum/new')
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-2xl">
-      <Card>
+    <div className="max-w-2xl mx-auto px-6 pt-28 pb-16">
+      <Card className="rounded-3xl border border-border/60 shadow-sm">
         <CardHeader>
           <CardTitle>Start a Discussion</CardTitle>
           <CardDescription>

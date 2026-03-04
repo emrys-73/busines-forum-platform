@@ -13,10 +13,12 @@ export default async function SkillsMapPage() {
     .eq('is_visible', true)
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Skills Map</h1>
-        <p className="text-muted-foreground">
+    <div className="max-w-6xl mx-auto px-6 pt-28 pb-16">
+      <div className="mb-12 reveal">
+        <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
+          Skills Map
+        </h1>
+        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
           Visual overview of all skills and interests in our community. Larger = more members share it.
         </p>
       </div>

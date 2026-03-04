@@ -35,7 +35,7 @@ export default async function EventPage({ params }: PageProps) {
   const e = event as Event
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-3xl">
+    <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
       <div className="mb-6">
         <Badge variant={e.is_upcoming ? 'default' : 'secondary'} className="mb-3">
           {e.is_upcoming ? 'Upcoming' : 'Past Event'}

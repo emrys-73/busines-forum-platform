@@ -42,7 +42,7 @@ export default async function CompanyPage({ params }: PageProps) {
   const members = (companyMembers as CompanyMember[]) || []
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-3xl">
+    <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
       <div className="flex flex-col sm:flex-row gap-6 items-start mb-8">
         {c.logo_url ? (
           <img src={c.logo_url} alt={c.name} className="w-16 h-16 rounded-xl object-contain border bg-background" />

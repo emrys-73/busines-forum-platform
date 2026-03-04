@@ -53,7 +53,7 @@ export default async function MemberProfilePage({ params }: PageProps) {
   const memberships = (companyMemberships as CompanyMember[]) || []
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-3xl">
+    <div className="max-w-3xl mx-auto px-6 pt-28 pb-16">
       <div className="flex flex-col sm:flex-row gap-6 items-start">
         <Avatar className="h-20 w-20 flex-shrink-0">
           <AvatarImage src={m.avatar_url || undefined} />

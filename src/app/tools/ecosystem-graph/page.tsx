@@ -21,15 +21,12 @@ export default function EcosystemGraphPage() {
   }, [])
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Network className="h-5 w-5 text-primary" />
-          </div>
-          <h1 className="text-2xl font-bold">Ecosystem Graph</h1>
-        </div>
-        <p className="text-muted-foreground text-sm">
+    <div className="max-w-7xl mx-auto px-6 pt-28 pb-16">
+      <div className="mb-12 reveal">
+        <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
+          Ecosystem Graph
+        </h1>
+        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
           Nodes = community members. Edges = shared skills or interests. Click any node to see their profile.
         </p>
       </div>

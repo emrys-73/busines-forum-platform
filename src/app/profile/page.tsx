@@ -22,7 +22,7 @@ export default async function ProfilePage() {
 
   if (!member) {
     return (
-      <div className="container mx-auto px-4 py-10 max-w-2xl">
+      <div className="max-w-2xl mx-auto px-6 pt-28 pb-16">
         <Card>
           <CardHeader>
             <CardTitle>Profile Not Found</CardTitle>
@@ -38,7 +38,7 @@ export default async function ProfilePage() {
   const m = member as Member
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-2xl">
+    <div className="max-w-2xl mx-auto px-6 pt-28 pb-16">
       <div className="flex items-center gap-4 mb-8">
         <Avatar className="h-16 w-16">
           <AvatarImage src={m.avatar_url || undefined} />

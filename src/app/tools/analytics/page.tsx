@@ -71,10 +71,14 @@ export default async function AnalyticsPage() {
   })
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Community Analytics</h1>
-        <p className="text-muted-foreground">Data insights about our growing community.</p>
+    <div className="max-w-6xl mx-auto px-6 pt-28 pb-16">
+      <div className="mb-12 reveal">
+        <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
+          Community Analytics
+        </h1>
+        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
+          Data insights about our growing community.
+        </p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

@@ -38,7 +38,7 @@ function LoginForm() {
 
   if (sent) {
     return (
-      <Card className="max-w-sm mx-auto">
+      <Card className="w-full max-w-sm border border-border/60 rounded-3xl shadow-xl shadow-black/[0.06]">
         <CardContent className="pt-6 text-center space-y-3">
           <div className="text-3xl">✉️</div>
           <h2 className="font-semibold">Check your email</h2>
@@ -51,9 +51,9 @@ function LoginForm() {
   }
 
   return (
-    <Card className="max-w-sm mx-auto">
+    <Card className="w-full max-w-sm border border-border/60 rounded-3xl shadow-xl shadow-black/[0.06]">
       <CardHeader>
-        <CardTitle>Sign In</CardTitle>
+        <CardTitle className="text-2xl font-bold tracking-tight" style={{ letterSpacing: '-0.02em' }}>Sign In</CardTitle>
         <CardDescription>Enter your email to receive a magic link.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -80,12 +80,8 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="container mx-auto px-4 py-20">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold mb-2">Welcome to GLC Munich Forum</h1>
-        <p className="text-muted-foreground text-sm">Sign in to access your profile and join the conversation.</p>
-      </div>
-      <Suspense fallback={<div className="max-w-sm mx-auto h-48 bg-muted animate-pulse rounded-xl" />}>
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 pt-12">
+      <Suspense fallback={<div className="w-full max-w-sm h-48 bg-muted animate-pulse rounded-3xl" />}>
         <LoginForm />
       </Suspense>
     </div>

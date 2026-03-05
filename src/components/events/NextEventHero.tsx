@@ -31,7 +31,7 @@ interface NextEventHeroProps {
   location?: string
 }
 
-export function NextEventHero({ eventSlug = 'glc-business-forum-march-2026', eventTitle = 'GLC Business Forum', location = 'Am Kiesgrund 2-4, Feldkirchen' }: NextEventHeroProps) {
+export function NextEventHero({ eventSlug = 'glc-business-forum-march-2026', eventTitle = 'GLC Business Forum', location = 'Am Kiesgrund 2-4, 85622 Feldkirchen, Germany' }: NextEventHeroProps) {
   const { days, hours, minutes, seconds } = useCountdown(NEXT_EVENT_DATE)
   const isPast = NEXT_EVENT_DATE.getTime() < Date.now()
   const { t } = useTranslation()
@@ -54,7 +54,7 @@ export function NextEventHero({ eventSlug = 'glc-business-forum-march-2026', eve
           </h2>
           <div className="flex flex-wrap gap-4 text-base text-muted-foreground">
             <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" /> 5. März 2026</span>
-            <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> 19:00 Uhr MEZ</span>
+            <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> 19:00 Uhr CET</span>
             <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {location}</span>
           </div>
           <div className="mt-6">

@@ -33,7 +33,7 @@ export default async function EventsPage() {
         </p>
       </div>
 
-      {nextEvent && (
+      {nextEvent ? (
         <div className="mb-10">
           <NextEventHero
             eventSlug={nextEvent.slug}
@@ -41,24 +41,17 @@ export default async function EventsPage() {
             location={nextEvent.location || undefined}
           />
         </div>
+      ) : (
+        <div className="mb-10">
+          <NextEventHero />
+        </div>
       )}
 
       {upcoming.length > 1 && (
-        <section className="mb-10">
+        <section>
           <h2 className="text-lg font-semibold mb-4">Weitere kommende Veranstaltungen</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {upcoming.slice(1).map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {past.length > 0 && (
-        <section>
-          <h2 className="text-lg font-semibold mb-4">Vergangene Veranstaltungen</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {past.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>

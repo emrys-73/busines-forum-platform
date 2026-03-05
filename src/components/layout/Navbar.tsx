@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ThemeToggle } from './ThemeToggle'
-import { LanguageToggle } from './LanguageToggle'
 import { MobileMenu } from './MobileMenu'
 import { useCurrentMember } from '@/hooks/useCurrentMember'
 import { createClient } from '@/lib/supabase/client'
@@ -19,7 +18,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
-import { ChevronDown } from 'lucide-react'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -31,16 +29,6 @@ export function Navbar() {
   const navLinks = [
     { href: '/members', label: t('nav.members') },
     { href: '/companies', label: t('nav.companies') },
-  ]
-
-  const toolLinks = [
-    { href: '/tools/matchmaker', label: t('nav.tools.matchmaker') },
-    { href: '/tools/chat', label: t('nav.tools.chat') },
-    { href: '/tools/opportunity-spotter', label: t('nav.tools.opportunities') },
-    { href: '/tools/introduce-me', label: t('nav.tools.introduce') },
-    { href: '/tools/skills-map', label: t('nav.tools.skillsMap') },
-    { href: '/tools/ecosystem-graph', label: t('nav.tools.ecosystem') },
-    { href: '/tools/analytics', label: t('nav.tools.analytics') },
   ]
 
   useEffect(() => {
@@ -90,33 +78,10 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                className={cn(
-                  'flex items-center gap-0.5 px-3 py-1.5 rounded-full text-base transition-all duration-200',
-                  pathname.startsWith('/tools')
-                    ? 'text-foreground font-medium'
-                    : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {t('nav.tools.label')}
-                <ChevronDown className="h-3.5 w-3.5 mt-0.5" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-56 rounded-2xl p-1.5">
-              {toolLinks.map((link) => (
-                <DropdownMenuItem key={link.href} asChild>
-                  <Link href={link.href} className="rounded-xl text-base cursor-pointer">{link.label}</Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
         </nav>
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <LanguageToggle />
           <ThemeToggle />
           {member ? (
             <DropdownMenu>

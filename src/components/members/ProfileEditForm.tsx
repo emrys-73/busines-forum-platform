@@ -67,6 +67,10 @@ export function ProfileEditForm({ member, onSaved }: ProfileEditFormProps) {
   }
 
   const ALL_TAGS = ['founder', 'investor', 'advisor', 'technical', 'creative', 'operator', 'marketer']
+  const TAG_LABELS: Record<string, string> = {
+    founder: 'Gründer', investor: 'Investor', advisor: 'Berater',
+    technical: 'Technisch', creative: 'Kreativ', operator: 'Operator', marketer: 'Marketing',
+  }
 
   async function onSubmit(data: FormData) {
     setSaving(true)
@@ -187,12 +191,12 @@ export function ProfileEditForm({ member, onSaved }: ProfileEditFormProps) {
             <Badge
               key={tag}
               variant={tags.includes(tag) ? 'default' : 'outline'}
-              className="cursor-pointer capitalize select-none"
+              className="cursor-pointer select-none"
               onClick={() => setTags((prev) =>
                 prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
               )}
             >
-              {tag}
+              {TAG_LABELS[tag] || tag}
             </Badge>
           ))}
         </div>

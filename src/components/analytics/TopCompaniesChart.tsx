@@ -14,7 +14,7 @@ export function TopCompaniesChart({ data }: TopCompaniesChartProps) {
       <BarChart data={data} margin={{ top: 5, right: 20, bottom: 40, left: 0 }}>
         <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-20} textAnchor="end" interval={0} />
         <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
-        <Tooltip formatter={(v) => [`${v} members`, 'Team Size']} />
+        <Tooltip formatter={(v) => [`${v} Mitglieder`, 'Teamgröße']} />
         <Bar dataKey="members" radius={[4, 4, 0, 0]}>
           {data.map((_, i) => (
             <Cell key={i} fill={COLORS[i % COLORS.length]} />

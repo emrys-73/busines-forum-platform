@@ -6,13 +6,13 @@ export const metadata: Metadata = { title: 'Community Chat' }
 
 export default function ChatPage() {
   return (
-    <div className="max-w-2xl mx-auto px-6 pt-28 pb-16">
-      <div className="mb-12 reveal">
-        <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
+    <div className="max-w-2xl mx-auto px-6 pt-24 pb-8">
+      <div className="mb-6 reveal">
+        <h1 className="text-[clamp(2rem,5vw,3rem)] font-bold tracking-tight mb-1.5" style={{ letterSpacing: '-0.03em' }}>
           Community Chat
         </h1>
-        <p className="text-[17px] text-muted-foreground font-normal max-w-2xl">
-          Chatte mit einer KI, die jedes Mitglied kennt. Frage nach Fähigkeiten, finde Verbindungen oder erkunde die Community.
+        <p className="text-[15px] text-muted-foreground font-normal">
+          Chatte mit einer KI, die jedes Mitglied kennt.
         </p>
       </div>
       <ChatInterface />

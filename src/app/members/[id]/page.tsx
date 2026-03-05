@@ -9,6 +9,16 @@ import Link from 'next/link'
 import { Linkedin, Globe, Building2, Lightbulb, HandHelping } from 'lucide-react'
 import type { Metadata } from 'next'
 
+const TAG_LABELS: Record<string, string> = {
+  founder: 'Gründer',
+  investor: 'Investor',
+  advisor: 'Berater',
+  technical: 'Technisch',
+  creative: 'Kreativ',
+  operator: 'Operator',
+  marketer: 'Marketing',
+}
+
 const TAG_COLORS: Record<string, string> = {
   founder: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
   investor: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
@@ -73,7 +83,7 @@ export default async function MemberProfilePage({ params }: PageProps) {
                 key={tag}
                 className={`text-sm px-2.5 py-0.5 rounded-full font-medium capitalize ${TAG_COLORS[tag] || 'bg-muted text-muted-foreground'}`}
               >
-                {tag}
+                {TAG_LABELS[tag] || tag}
               </span>
             ))}
           </div>

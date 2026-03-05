@@ -14,7 +14,7 @@ export function SkillDistributionChart({ data }: SkillDistributionChartProps) {
       <BarChart data={data} layout="vertical" margin={{ left: 80, right: 20 }}>
         <XAxis type="number" tick={{ fontSize: 11 }} />
         <YAxis type="category" dataKey="skill" tick={{ fontSize: 11 }} width={80} />
-        <Tooltip formatter={(v) => [`${v} members`, 'Count']} />
+        <Tooltip formatter={(v) => [`${v} Mitglieder`, 'Anzahl']} />
         <Bar dataKey="count" radius={[0, 4, 4, 0]}>
           {data.map((_, i) => (
             <Cell key={i} fill={COLORS[i % COLORS.length]} />

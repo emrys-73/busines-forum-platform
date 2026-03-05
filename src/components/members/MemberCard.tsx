@@ -3,6 +3,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Member } from '@/types'
 
+const TAG_LABELS: Record<string, string> = {
+  founder: 'Gründer', investor: 'Investor', advisor: 'Berater',
+  technical: 'Technisch', creative: 'Kreativ', operator: 'Operator', marketer: 'Marketing',
+}
+
 const TAG_COLORS: Record<string, string> = {
   founder: 'bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400',
   investor: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400',
@@ -45,9 +50,9 @@ export function MemberCard({ member }: MemberCardProps) {
             {member.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className={`text-sm px-2.5 py-1 rounded-full font-semibold capitalize ${TAG_COLORS[tag] || 'bg-muted text-muted-foreground'}`}
+                className={`text-sm px-2.5 py-1 rounded-full font-semibold ${TAG_COLORS[tag] || 'bg-muted text-muted-foreground'}`}
               >
-                {tag}
+                {TAG_LABELS[tag] || tag}
               </span>
             ))}
           </div>

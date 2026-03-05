@@ -194,7 +194,7 @@ export function EcosystemGraph({ data }: EcosystemGraphProps) {
               )}
               {selectedNode.member.skills.length > 0 && (
                 <div>
-                  <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2">Skills</p>
+                  <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2">Fähigkeiten</p>
                   <div className="flex flex-wrap gap-1">
                     {selectedNode.member.skills.map((s) => (
                       <Badge key={s} variant="secondary" className="text-sm">{s}</Badge>
@@ -204,7 +204,7 @@ export function EcosystemGraph({ data }: EcosystemGraphProps) {
               )}
               <Button asChild size="sm" className="w-full gap-2">
                 <Link href={`/members/${selectedNode.member.id}`}>
-                  View Full Profile
+                  Vollständiges Profil
                   <ExternalLink className="h-4 w-4" />
                 </Link>
               </Button>
@@ -214,7 +214,7 @@ export function EcosystemGraph({ data }: EcosystemGraphProps) {
       </Sheet>
 
       <div className="mt-3 text-sm text-muted-foreground text-center">
-        Click a node to see member details. Hover to highlight connections.
+        Klicke auf einen Knoten, um Details zu sehen. Hover zeigt Verbindungen.
       </div>
     </div>
   )

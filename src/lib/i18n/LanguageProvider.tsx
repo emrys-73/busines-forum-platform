@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useCallback, useEffect, useState } from 'react'
+import { createContext, useCallback, useState } from 'react'
 import { type Locale, translations } from './translations'
 
 interface LanguageContextValue {
@@ -15,21 +15,11 @@ export const LanguageContext = createContext<LanguageContextValue>({
   t: (key: string) => key,
 })
 
-const STORAGE_KEY = 'glc-locale'
-
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('de')
+  const [locale] = useState<Locale>('de')
 
-  useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY) as Locale | null
-    if (stored && (stored === 'de' || stored === 'en')) {
-      setLocaleState(stored)
-    }
-  }, [])
-
-  const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale)
-    localStorage.setItem(STORAGE_KEY, newLocale)
+  const setLocale = useCallback((_newLocale: Locale) => {
+    // German only — no language switching
   }, [])
 
   const t = useCallback(

@@ -19,7 +19,7 @@ export function MemberGrowthChart({ data }: MemberGrowthChartProps) {
         <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
         <XAxis dataKey="month" tick={{ fontSize: 11 }} />
         <YAxis tick={{ fontSize: 11 }} />
-        <Tooltip formatter={(v) => [`${v} members`, 'Total']} />
+        <Tooltip formatter={(v) => [`${v} Mitglieder`, 'Gesamt']} />
         <Area type="monotone" dataKey="count" stroke="#6366f1" strokeWidth={2} fill="url(#colorCount)" />
       </AreaChart>
     </ResponsiveContainer>

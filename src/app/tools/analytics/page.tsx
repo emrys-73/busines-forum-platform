@@ -9,7 +9,7 @@ import { Users, Building2 } from 'lucide-react'
 import { format, subMonths } from 'date-fns'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'Analytics' }
+export const metadata: Metadata = { title: 'Analyse' }
 
 export default async function AnalyticsPage() {
   const supabase = await createClient()
@@ -51,16 +51,20 @@ export default async function AnalyticsPage() {
   const companyNameMap = new Map<string, string>()
   ;(companyMembers || []).forEach((cm: Record<string, unknown>) => {
     const cid = cm.company_id as string
-    const cname = (cm.company as { name: string } | null)?.name || 'Unknown'
+    const cname = (cm.company as { name: string } | null)?.name || 'Unbekannt'
     companyMemberMap.set(cid, (companyMemberMap.get(cid) || 0) + 1)
     companyNameMap.set(cid, cname)
   })
   const topCompanies = [...companyMemberMap.entries()]
     .sort((a, b) => b[1] - a[1])
     .slice(0, 8)
-    .map(([id, members]) => ({ name: companyNameMap.get(id) || 'Unknown', members }))
+    .map(([id, members]) => ({ name: companyNameMap.get(id) || 'Unbekannt', members }))
 
   // Tag distribution
+  const TAG_LABELS: Record<string, string> = {
+    founder: 'Gründer', investor: 'Investor', advisor: 'Berater',
+    technical: 'Technisch', creative: 'Kreativ', operator: 'Operator', marketer: 'Marketing',
+  }
   const tagMap = new Map<string, number>()
   memberList.forEach((m) => {
     m.tags.forEach((t) => tagMap.set(t, (tagMap.get(t) || 0) + 1))
@@ -124,7 +128,7 @@ export default async function AnalyticsPage() {
             <div className="space-y-3 pt-2">
               {[...tagMap.entries()].sort((a, b) => b[1] - a[1]).map(([tag, count]) => (
                 <div key={tag} className="flex items-center gap-3">
-                  <span className="text-base capitalize w-24 flex-shrink-0">{tag}</span>
+                  <span className="text-base w-24 flex-shrink-0">{TAG_LABELS[tag] || tag}</span>
                   <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
                     <div
                       className="h-2 bg-primary rounded-full"

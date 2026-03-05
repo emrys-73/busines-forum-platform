@@ -3,7 +3,7 @@ import { SkillsTagCloud } from '@/components/tools/SkillsTagCloud'
 import { Member } from '@/types'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'Skills Map' }
+export const metadata: Metadata = { title: 'Skills-Karte' }
 
 export default async function SkillsMapPage() {
   const supabase = await createClient()

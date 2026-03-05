@@ -48,14 +48,14 @@ export function SkillsTagCloud({ members }: SkillsTagCloudProps) {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Skills</h3>
+        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Fähigkeiten</h3>
         <div className="flex flex-wrap gap-2 items-baseline">
           {skills.map(({ tag, count }) => (
             <span
               key={tag}
               className="text-primary font-medium hover:opacity-70 transition-opacity cursor-default"
               style={{ fontSize: `${fontSize(count, maxSkill)}rem` }}
-              title={`${count} member${count !== 1 ? 's' : ''}`}
+              title={`${count} Mitglied${count !== 1 ? 'er' : ''}`}
             >
               {tag}
             </span>
@@ -64,14 +64,14 @@ export function SkillsTagCloud({ members }: SkillsTagCloudProps) {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Interests</h3>
+        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Interessen</h3>
         <div className="flex flex-wrap gap-2 items-baseline">
           {interests.map(({ tag, count }) => (
             <span
               key={tag}
               className="text-muted-foreground font-medium hover:text-foreground transition-colors cursor-default"
               style={{ fontSize: `${fontSize(count, maxInterest)}rem` }}
-              title={`${count} member${count !== 1 ? 's' : ''}`}
+              title={`${count} Mitglied${count !== 1 ? 'er' : ''}`}
             >
               {tag}
             </span>

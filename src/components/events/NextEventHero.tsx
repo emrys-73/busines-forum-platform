@@ -53,8 +53,8 @@ export function NextEventHero({ eventSlug = 'glc-business-forum-march-2026', eve
             {eventTitle}
           </h2>
           <div className="flex flex-wrap gap-4 text-base text-muted-foreground">
-            <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" /> March 5, 2026</span>
-            <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> 7:00 PM CET</span>
+            <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" /> 5. März 2026</span>
+            <span className="flex items-center gap-1.5"><Clock className="h-4 w-4" /> 19:00 Uhr MEZ</span>
             <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {location}</span>
           </div>
           <div className="mt-6">

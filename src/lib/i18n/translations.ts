@@ -85,7 +85,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     'footer.description': 'Wo Glaube auf Unternehmertum trifft. Community-Plattform für das GLC Business Forum.',
     'footer.community': 'Community',
     'footer.account': 'Konto',
-    'footer.builtWith': 'Mit Liebe für die Community gebaut',
+    'footer.builtWith': 'Mit Liebe für Jesus gebaut',
   },
 
   en: {
@@ -172,6 +172,6 @@ export const translations: Record<Locale, Record<string, string>> = {
     'footer.description': 'Where faith meets entrepreneurship. Community platform for the GLC Business Forum.',
     'footer.community': 'Community',
     'footer.account': 'Account',
-    'footer.builtWith': 'Built with love for the community',
+    'footer.builtWith': 'Built with love for Jesus',
   },
 }

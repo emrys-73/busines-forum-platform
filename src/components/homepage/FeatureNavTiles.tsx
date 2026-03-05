@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowRight, ChevronLeft, ChevronRight, Users, Sparkles, Building2, MessageCircle, Network, BarChart3 } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, Users, Sparkles, Building2, MessageCircle, BarChart3 } from 'lucide-react'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 
 type Accent = 'teal' | 'blue' | 'purple'
@@ -64,14 +64,6 @@ export function FeatureNavTiles() {
       href: '/tools/chat',
       accent: 'teal',
       icon: MessageCircle,
-    },
-    {
-      category: t('features.category.visualisation'),
-      title: t('features.graph.title'),
-      description: t('features.graph.desc'),
-      href: '/tools/ecosystem-graph',
-      accent: 'teal',
-      icon: Network,
     },
     {
       category: t('features.category.insights'),

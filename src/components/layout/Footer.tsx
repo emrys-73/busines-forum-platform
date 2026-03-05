@@ -38,7 +38,6 @@ export function Footer() {
               {[
                 { href: '/tools/matchmaker', label: t('nav.tools.matchmaker') },
                 { href: '/tools/chat', label: t('nav.tools.chat') },
-                { href: '/tools/ecosystem-graph', label: t('nav.tools.ecosystem') },
                 { href: '/tools/analytics', label: t('nav.tools.analytics') },
               ].map((l) => (
                 <li key={l.href}>

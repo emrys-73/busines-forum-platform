@@ -39,7 +39,7 @@ export default function IntroduceMePage() {
       const data = await res.json()
       setEmailDraft(data)
     } catch {
-      setEmailDraft({ subject: 'Error', body: 'Failed to generate. Please try again.' })
+      setEmailDraft({ subject: 'Fehler', body: 'Generierung fehlgeschlagen. Bitte erneut versuchen.' })
     } finally {
       setLoading(false)
     }
@@ -49,19 +49,19 @@ export default function IntroduceMePage() {
     <div className="max-w-2xl mx-auto px-6 pt-28 pb-16">
       <div className="mb-12 reveal">
         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
-          Introduce Me
+          Vorstellung
         </h1>
-        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
-          Select a community member and let AI write a warm introduction email for you.
+        <p className="text-xl text-muted-foreground font-normal max-w-2xl">
+          Wähle ein Community-Mitglied und lass die KI eine Vorstellungs-E-Mail für dich schreiben.
         </p>
       </div>
 
       <form onSubmit={handleGenerate} className="space-y-4 mb-8">
         <div className="space-y-1.5">
-          <Label>Who would you like to connect with?</Label>
+          <Label>Mit wem möchtest du dich vernetzen?</Label>
           <Select value={targetId} onValueChange={setTargetId}>
             <SelectTrigger>
-              <SelectValue placeholder="Select a community member..." />
+              <SelectValue placeholder="Community-Mitglied auswählen..." />
             </SelectTrigger>
             <SelectContent>
               {members.map((m) => (
@@ -74,19 +74,19 @@ export default function IntroduceMePage() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="reason">Why do you want to connect?</Label>
+          <Label htmlFor="reason">Warum möchtest du dich vernetzen?</Label>
           <Textarea
             id="reason"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            placeholder="e.g. I'd love to discuss a potential collaboration on our B2B SaaS products..."
+            placeholder="z.B. Ich würde gerne eine mögliche Zusammenarbeit bei unseren B2B SaaS-Produkten besprechen..."
             rows={3}
           />
         </div>
 
         <Button type="submit" disabled={loading || !targetId || !reason.trim()} className="gap-2">
           <Mail className="h-4 w-4" />
-          {loading ? 'Generating...' : 'Generate Introduction Email'}
+          {loading ? 'Wird generiert...' : 'Vorstellungs-E-Mail generieren'}
         </Button>
       </form>
 
@@ -94,12 +94,12 @@ export default function IntroduceMePage() {
         <Card>
           <CardContent className="p-6 space-y-4">
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Subject</div>
-              <div className="text-sm font-medium">{emailDraft.subject}</div>
+              <div className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-1">Betreff</div>
+              <div className="text-base font-medium">{emailDraft.subject}</div>
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Email Body</div>
-              <div className="text-sm whitespace-pre-wrap bg-muted rounded-lg p-4 leading-relaxed">{emailDraft.body}</div>
+              <div className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-1">E-Mail-Text</div>
+              <div className="text-base whitespace-pre-wrap bg-muted rounded-lg p-4 leading-relaxed">{emailDraft.body}</div>
             </div>
             <Button
               variant="outline"
@@ -107,8 +107,8 @@ export default function IntroduceMePage() {
               className="gap-2"
               onClick={() => navigator.clipboard.writeText(`Subject: ${emailDraft.subject}\n\n${emailDraft.body}`)}
             >
-              <Mail className="h-3.5 w-3.5" />
-              Copy to Clipboard
+              <Mail className="h-4 w-4" />
+              In Zwischenablage kopieren
             </Button>
           </CardContent>
         </Card>

@@ -4,8 +4,8 @@ import { Member } from '@/types'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Members',
-  description: 'Browse all GLC Munich Business Forum community members.',
+  title: 'Mitglieder',
+  description: 'Durchsuche alle Mitglieder des GLC Business Forums.',
 }
 
 export default async function MembersPage() {
@@ -20,10 +20,10 @@ export default async function MembersPage() {
     <div className="max-w-6xl mx-auto px-6 pt-28 pb-16">
       <div className="mb-12 reveal">
         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
-          Community Members
+          Community-Mitglieder
         </h1>
-        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
-          Meet the founders, investors, advisors, and builders of GLC Munich Business Forum.
+        <p className="text-[17px] text-muted-foreground font-normal max-w-2xl">
+          Triff die Gründer, Investoren, Berater und Macher des GLC Business Forums.
         </p>
       </div>
       <MemberSearch members={(members as Member[]) || []} />

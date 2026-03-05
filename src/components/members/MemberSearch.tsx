@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { MemberGrid } from './MemberGrid'
 import { Member } from '@/types'
 import { Search, X } from 'lucide-react'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 
 const ALL_TAGS = ['founder', 'investor', 'advisor', 'technical', 'creative', 'operator', 'marketer']
 
@@ -21,6 +22,7 @@ const TAG_STYLES: Record<string, string> = {
 interface MemberSearchProps { members: Member[] }
 
 export function MemberSearch({ members }: MemberSearchProps) {
+  const { t } = useTranslation()
   const [query, setQuery] = useState('')
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
@@ -43,10 +45,10 @@ export function MemberSearch({ members }: MemberSearchProps) {
       <div className="relative mb-6 max-w-lg">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search members, skills, bio..."
+          placeholder="Mitglieder, Fähigkeiten, Bio suchen..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="pl-11 h-12 rounded-2xl border-border/60 bg-muted/30 text-[15px] focus:bg-background transition-colors"
+          className="pl-11 h-12 rounded-2xl border-border/60 bg-muted/30 text-lg focus:bg-background transition-colors"
         />
         {query && (
           <button
@@ -65,23 +67,23 @@ export function MemberSearch({ members }: MemberSearchProps) {
             key={tag}
             data-active={selectedTags.includes(tag)}
             onClick={() => toggleTag(tag)}
-            className={`text-[13px] px-4 py-1.5 rounded-full border border-border/60 font-medium capitalize transition-all duration-200 hover:border-border ${TAG_STYLES[tag] || ''} data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground`}
+            className={`text-base px-4 py-1.5 rounded-full border border-border/60 font-medium capitalize transition-all duration-200 hover:border-border ${TAG_STYLES[tag] || ''} data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground`}
           >
-            {tag}
+            {t(`tag.${tag}`)}
           </button>
         ))}
         {(query || selectedTags.length > 0) && (
           <button
             onClick={() => { setQuery(''); setSelectedTags([]) }}
-            className="text-[13px] px-4 py-1.5 rounded-full text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
+            className="text-base px-4 py-1.5 rounded-full text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
           >
-            <X className="h-3 w-3" /> Clear
+            <X className="h-4 w-4" /> Zurücksetzen
           </button>
         )}
       </div>
 
-      <p className="text-[13px] text-muted-foreground mb-6">
-        {filtered.length} member{filtered.length !== 1 ? 's' : ''}
+      <p className="text-base text-muted-foreground mb-6">
+        {filtered.length} Mitglied{filtered.length !== 1 ? 'er' : ''}
       </p>
 
       <MemberGrid members={filtered} />

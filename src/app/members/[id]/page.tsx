@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id } = await params
   const supabase = await createClient()
   const { data } = await supabase.from('members').select('name, tagline').eq('id', id).single()
-  if (!data) return { title: 'Member Not Found' }
+  if (!data) return { title: 'Mitglied nicht gefunden' }
   return { title: data.name, description: data.tagline || undefined }
 }
 
@@ -65,13 +65,13 @@ export default async function MemberProfilePage({ params }: PageProps) {
         <div className="flex-1">
           <h1 className="text-2xl font-bold">{m.name}</h1>
           {m.job_title && <p className="text-muted-foreground mt-0.5">{m.job_title}</p>}
-          {m.tagline && <p className="mt-2 text-sm italic">&ldquo;{m.tagline}&rdquo;</p>}
+          {m.tagline && <p className="mt-2 text-base italic">&ldquo;{m.tagline}&rdquo;</p>}
 
           <div className="flex flex-wrap gap-2 mt-3">
             {m.tags.map((tag) => (
               <span
                 key={tag}
-                className={`text-xs px-2.5 py-0.5 rounded-full font-medium capitalize ${TAG_COLORS[tag] || 'bg-muted text-muted-foreground'}`}
+                className={`text-sm px-2.5 py-0.5 rounded-full font-medium capitalize ${TAG_COLORS[tag] || 'bg-muted text-muted-foreground'}`}
               >
                 {tag}
               </span>
@@ -82,7 +82,7 @@ export default async function MemberProfilePage({ params }: PageProps) {
             {m.linkedin_url && (
               <Button asChild size="sm" variant="outline" className="gap-1.5">
                 <a href={m.linkedin_url} target="_blank" rel="noopener noreferrer">
-                  <Linkedin className="h-3.5 w-3.5" />
+                  <Linkedin className="h-4 w-4" />
                   LinkedIn
                 </a>
               </Button>
@@ -90,7 +90,7 @@ export default async function MemberProfilePage({ params }: PageProps) {
             {m.website_url && (
               <Button asChild size="sm" variant="outline" className="gap-1.5">
                 <a href={m.website_url} target="_blank" rel="noopener noreferrer">
-                  <Globe className="h-3.5 w-3.5" />
+                  <Globe className="h-4 w-4" />
                   Website
                 </a>
               </Button>
@@ -103,14 +103,14 @@ export default async function MemberProfilePage({ params }: PageProps) {
 
       {m.bio && (
         <section className="mb-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">About</h2>
-          <p className="text-sm leading-relaxed">{m.bio}</p>
+          <h2 className="text-base font-semibold uppercase tracking-wider text-muted-foreground mb-3">Über</h2>
+          <p className="text-base leading-relaxed">{m.bio}</p>
         </section>
       )}
 
       {m.skills.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Skills</h2>
+          <h2 className="text-base font-semibold uppercase tracking-wider text-muted-foreground mb-3">Fähigkeiten</h2>
           <div className="flex flex-wrap gap-2">
             {m.skills.map((skill) => (
               <Badge key={skill} variant="secondary">{skill}</Badge>
@@ -121,7 +121,7 @@ export default async function MemberProfilePage({ params }: PageProps) {
 
       {m.interests.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Interests</h2>
+          <h2 className="text-base font-semibold uppercase tracking-wider text-muted-foreground mb-3">Interessen</h2>
           <div className="flex flex-wrap gap-2">
             {m.interests.map((interest) => (
               <Badge key={interest} variant="outline">{interest}</Badge>
@@ -136,18 +136,18 @@ export default async function MemberProfilePage({ params }: PageProps) {
             <div className="rounded-lg border p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Lightbulb className="h-4 w-4 text-amber-500" />
-                <span className="text-sm font-medium">Looking For</span>
+                <span className="text-base font-medium">Sucht nach</span>
               </div>
-              <p className="text-sm text-muted-foreground">{m.looking_for}</p>
+              <p className="text-base text-muted-foreground">{m.looking_for}</p>
             </div>
           )}
           {m.can_help_with && (
             <div className="rounded-lg border p-4">
               <div className="flex items-center gap-2 mb-2">
                 <HandHelping className="h-4 w-4 text-green-500" />
-                <span className="text-sm font-medium">Can Help With</span>
+                <span className="text-base font-medium">Kann helfen bei</span>
               </div>
-              <p className="text-sm text-muted-foreground">{m.can_help_with}</p>
+              <p className="text-base text-muted-foreground">{m.can_help_with}</p>
             </div>
           )}
         </section>
@@ -155,7 +155,7 @@ export default async function MemberProfilePage({ params }: PageProps) {
 
       {memberships.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Companies</h2>
+          <h2 className="text-base font-semibold uppercase tracking-wider text-muted-foreground mb-3">Unternehmen</h2>
           <div className="space-y-2">
             {memberships.map((cm) => (
               <Link key={cm.id} href={`/companies/${cm.company?.slug}`}>
@@ -164,8 +164,8 @@ export default async function MemberProfilePage({ params }: PageProps) {
                     <Building2 className="h-4 w-4 text-primary" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium">{cm.company?.name}</div>
-                    <div className="text-xs text-muted-foreground">{cm.role}</div>
+                    <div className="text-base font-medium">{cm.company?.name}</div>
+                    <div className="text-sm text-muted-foreground">{cm.role}</div>
                   </div>
                 </div>
               </Link>

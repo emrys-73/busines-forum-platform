@@ -1,101 +1,173 @@
 'use client'
 
-import { useCallback, useRef, useState, useEffect } from 'react'
+import { useMemo, useState, useRef, useCallback } from 'react'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
-import { GraphData, GraphNode } from '@/lib/graph-utils'
+import { GraphData, GraphNode, GraphLink } from '@/lib/graph-utils'
 import { ExternalLink } from 'lucide-react'
 
 interface EcosystemGraphProps {
   data: GraphData
 }
 
+interface PositionedNode extends GraphNode {
+  x: number
+  y: number
+}
+
+function layoutNodes(data: GraphData, width: number, height: number): PositionedNode[] {
+  const cx = width / 2
+  const cy = height / 2
+  const groups = new Map<number, GraphNode[]>()
+
+  data.nodes.forEach((n) => {
+    const list = groups.get(n.group) || []
+    list.push(n)
+    groups.set(n.group, list)
+  })
+
+  const groupKeys = Array.from(groups.keys())
+  const positioned: PositionedNode[] = []
+  const groupRadius = Math.min(width, height) * 0.32
+
+  groupKeys.forEach((groupId, gi) => {
+    const members = groups.get(groupId)!
+    const groupAngle = (2 * Math.PI * gi) / groupKeys.length - Math.PI / 2
+    const groupCx = cx + groupRadius * Math.cos(groupAngle)
+    const groupCy = cy + groupRadius * Math.sin(groupAngle)
+    const memberRadius = Math.min(80, 30 + members.length * 12)
+
+    members.forEach((node, mi) => {
+      const angle = (2 * Math.PI * mi) / members.length - Math.PI / 2
+      const x = members.length === 1 ? groupCx : groupCx + memberRadius * Math.cos(angle)
+      const y = members.length === 1 ? groupCy : groupCy + memberRadius * Math.sin(angle)
+      positioned.push({ ...node, x, y })
+    })
+  })
+
+  return positioned
+}
+
 export function EcosystemGraph({ data }: EcosystemGraphProps) {
-  const [ForceGraph, setForceGraph] = useState<React.ComponentType<Record<string, unknown>> | null>(null)
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null)
-  const [dimensions, setDimensions] = useState({ width: 800, height: 600 })
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    import('react-force-graph-2d').then((m) => setForceGraph(() => m.default as React.ComponentType<Record<string, unknown>>))
-  }, [])
+  const width = 900
+  const height = 600
 
-  useEffect(() => {
-    function update() {
-      if (containerRef.current) {
-        setDimensions({
-          width: containerRef.current.offsetWidth,
-          height: Math.max(500, window.innerHeight - 200),
-        })
-      }
-    }
-    update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
-  }, [])
+  const positioned = useMemo(() => layoutNodes(data, width, height), [data])
 
-  const handleNodeClick = useCallback((node: Record<string, unknown>) => {
-    setSelectedNode(node as unknown as GraphNode)
-  }, [])
+  const nodeMap = useMemo(() => {
+    const map = new Map<string, PositionedNode>()
+    positioned.forEach((n) => map.set(n.id, n))
+    return map
+  }, [positioned])
 
-  const nodeCanvasObject = useCallback((node: Record<string, unknown>, ctx: CanvasRenderingContext2D, globalScale: number) => {
-    const n = node as unknown as GraphNode & { x: number; y: number }
-    const label = n.name
-    const fontSize = Math.max(10, 12 / globalScale)
-    const radius = n.val || 6
+  const connectedTo = useMemo(() => {
+    const map = new Map<string, Set<string>>()
+    data.links.forEach((link) => {
+      const s = typeof link.source === 'string' ? link.source : (link.source as unknown as GraphNode).id
+      const t = typeof link.target === 'string' ? link.target : (link.target as unknown as GraphNode).id
+      if (!map.has(s)) map.set(s, new Set())
+      if (!map.has(t)) map.set(t, new Set())
+      map.get(s)!.add(t)
+      map.get(t)!.add(s)
+    })
+    return map
+  }, [data.links])
 
-    ctx.beginPath()
-    ctx.arc(n.x, n.y, radius, 0, 2 * Math.PI)
-    ctx.fillStyle = n.color || '#6366f1'
-    ctx.fill()
-    ctx.strokeStyle = 'rgba(255,255,255,0.6)'
-    ctx.lineWidth = 1.5
-    ctx.stroke()
+  const isHighlighted = useCallback((nodeId: string) => {
+    if (!hoveredNode) return true
+    if (nodeId === hoveredNode) return true
+    return connectedTo.get(hoveredNode)?.has(nodeId) ?? false
+  }, [hoveredNode, connectedTo])
 
-    if (globalScale >= 1.5 || (globalScale >= 0.8 && radius > 8)) {
-      ctx.font = `${fontSize}px Helvetica Neue, sans-serif`
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'top'
-      ctx.fillStyle = 'rgba(0,0,0,0.8)'
-      ctx.fillText(label, n.x, n.y + radius + 2)
-    }
-  }, [])
-
-  if (!ForceGraph) {
-    return (
-      <div className="flex items-center justify-center h-[500px] border rounded-xl bg-muted/30">
-        <div className="text-center space-y-3">
-          <Skeleton className="h-8 w-8 rounded-full mx-auto" />
-          <p className="text-sm text-muted-foreground">Loading graph...</p>
-        </div>
-      </div>
-    )
-  }
+  const isLinkHighlighted = useCallback((link: GraphLink) => {
+    if (!hoveredNode) return true
+    const s = typeof link.source === 'string' ? link.source : (link.source as unknown as GraphNode).id
+    const t = typeof link.target === 'string' ? link.target : (link.target as unknown as GraphNode).id
+    return s === hoveredNode || t === hoveredNode
+  }, [hoveredNode])
 
   return (
     <div className="relative">
       <div
         ref={containerRef}
         className="border rounded-xl overflow-hidden bg-muted/10"
-        style={{ height: dimensions.height }}
       >
-        <ForceGraph
-          graphData={data as unknown as Record<string, unknown>}
-          width={dimensions.width}
-          height={dimensions.height}
-          nodeCanvasObject={nodeCanvasObject}
-          nodeCanvasObjectMode={() => 'replace'}
-          linkWidth={(link: Record<string, unknown>) => Math.sqrt((link.value as number) || 1)}
-          linkColor={() => 'rgba(100,100,100,0.15)'}
-          onNodeClick={handleNodeClick}
-          nodeLabel={(node: Record<string, unknown>) => (node as unknown as GraphNode).name}
-          backgroundColor="transparent"
-          cooldownTicks={100}
-        />
+        <svg
+          viewBox={`0 0 ${width} ${height}`}
+          className="w-full"
+          style={{ maxHeight: '70vh' }}
+        >
+          {/* Links */}
+          {data.links.map((link, i) => {
+            const s = typeof link.source === 'string' ? link.source : (link.source as unknown as GraphNode).id
+            const t = typeof link.target === 'string' ? link.target : (link.target as unknown as GraphNode).id
+            const source = nodeMap.get(s)
+            const target = nodeMap.get(t)
+            if (!source || !target) return null
+            const highlighted = isLinkHighlighted(link)
+            return (
+              <line
+                key={i}
+                x1={source.x}
+                y1={source.y}
+                x2={target.x}
+                y2={target.y}
+                stroke={highlighted ? 'rgba(120,120,120,0.25)' : 'rgba(120,120,120,0.06)'}
+                strokeWidth={Math.max(1, link.value * 1.5)}
+                className="transition-opacity duration-200"
+              />
+            )
+          })}
+
+          {/* Nodes */}
+          {positioned.map((node) => {
+            const highlighted = isHighlighted(node.id)
+            const radius = node.val || 6
+            return (
+              <g
+                key={node.id}
+                className="cursor-pointer"
+                onClick={() => setSelectedNode(node)}
+                onMouseEnter={() => setHoveredNode(node.id)}
+                onMouseLeave={() => setHoveredNode(null)}
+                style={{ opacity: highlighted ? 1 : 0.15, transition: 'opacity 0.2s' }}
+              >
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={radius + 2}
+                  fill="transparent"
+                />
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r={radius}
+                  fill={node.color || '#6366f1'}
+                  stroke="rgba(255,255,255,0.7)"
+                  strokeWidth={1.5}
+                />
+                <text
+                  x={node.x}
+                  y={node.y + radius + 14}
+                  textAnchor="middle"
+                  fontSize={11}
+                  fill="currentColor"
+                  className="pointer-events-none select-none"
+                  opacity={0.8}
+                >
+                  {node.name.split(' ')[0]}
+                </text>
+              </g>
+            )
+          })}
+        </svg>
       </div>
 
       <Sheet open={!!selectedNode} onOpenChange={(open) => !open && setSelectedNode(null)}>
@@ -110,22 +182,22 @@ export function EcosystemGraph({ data }: EcosystemGraphProps) {
                 <div>
                   <h3 className="font-semibold">{selectedNode.member.name}</h3>
                   {selectedNode.member.job_title && (
-                    <p className="text-sm text-muted-foreground">{selectedNode.member.job_title}</p>
+                    <p className="text-base text-muted-foreground">{selectedNode.member.job_title}</p>
                   )}
                 </div>
               </div>
               {selectedNode.member.tagline && (
-                <p className="text-sm italic text-muted-foreground">&ldquo;{selectedNode.member.tagline}&rdquo;</p>
+                <p className="text-base italic text-muted-foreground">&ldquo;{selectedNode.member.tagline}&rdquo;</p>
               )}
               {selectedNode.member.bio && (
-                <p className="text-sm">{selectedNode.member.bio}</p>
+                <p className="text-base">{selectedNode.member.bio}</p>
               )}
               {selectedNode.member.skills.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Skills</p>
+                  <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2">Skills</p>
                   <div className="flex flex-wrap gap-1">
                     {selectedNode.member.skills.map((s) => (
-                      <Badge key={s} variant="secondary" className="text-xs">{s}</Badge>
+                      <Badge key={s} variant="secondary" className="text-sm">{s}</Badge>
                     ))}
                   </div>
                 </div>
@@ -133,7 +205,7 @@ export function EcosystemGraph({ data }: EcosystemGraphProps) {
               <Button asChild size="sm" className="w-full gap-2">
                 <Link href={`/members/${selectedNode.member.id}`}>
                   View Full Profile
-                  <ExternalLink className="h-3.5 w-3.5" />
+                  <ExternalLink className="h-4 w-4" />
                 </Link>
               </Button>
             </div>
@@ -141,8 +213,8 @@ export function EcosystemGraph({ data }: EcosystemGraphProps) {
         </SheetContent>
       </Sheet>
 
-      <div className="mt-3 text-xs text-muted-foreground text-center">
-        Click a node to see member details. Edge thickness = shared skills/interests.
+      <div className="mt-3 text-sm text-muted-foreground text-center">
+        Click a node to see member details. Hover to highlight connections.
       </div>
     </div>
   )

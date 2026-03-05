@@ -4,8 +4,8 @@ import { Company } from '@/types'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Companies',
-  description: 'Discover startups and companies founded by GLC Munich Business Forum members.',
+  title: 'Unternehmen',
+  description: 'Entdecke Startups und Unternehmen von Mitgliedern des GLC Business Forums.',
 }
 
 export default async function CompaniesPage() {
@@ -19,10 +19,10 @@ export default async function CompaniesPage() {
     <div className="max-w-6xl mx-auto px-6 pt-28 pb-16">
       <div className="mb-12 reveal">
         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
-          Company Showcase
+          Firmen-Schaufenster
         </h1>
-        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
-          Startups, SMEs, and ventures founded and led by our community members.
+        <p className="text-[17px] text-muted-foreground font-normal max-w-2xl">
+          Startups, KMUs und Unternehmen, gegründet und geführt von unseren Community-Mitgliedern.
         </p>
       </div>
       <CompanyGrid companies={(companies as Company[]) || []} />

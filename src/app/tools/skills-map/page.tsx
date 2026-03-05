@@ -16,10 +16,10 @@ export default async function SkillsMapPage() {
     <div className="max-w-6xl mx-auto px-6 pt-28 pb-16">
       <div className="mb-12 reveal">
         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
-          Skills Map
+          Skills-Karte
         </h1>
-        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
-          Visual overview of all skills and interests in our community. Larger = more members share it.
+        <p className="text-[17px] text-muted-foreground font-normal max-w-2xl">
+          Visuelle Übersicht aller Fähigkeiten und Interessen in unserer Community. Größer = mehr Mitglieder teilen diese.
         </p>
       </div>
       <SkillsTagCloud members={(members as Member[]) || []} />

@@ -39,12 +39,12 @@ export function ChatInterface() {
             <Bot className="h-4 w-4 text-primary" />
           </div>
           <div>
-            <div className="text-sm font-semibold">Community AI</div>
-            <div className="text-xs text-muted-foreground">Knows every member</div>
+            <div className="text-base font-semibold">Community-KI</div>
+            <div className="text-sm text-muted-foreground">Kennt jedes Mitglied</div>
           </div>
         </div>
         {messages.length > 0 && (
-          <Button variant="ghost" size="icon" onClick={clearMessages} title="Clear conversation">
+          <Button variant="ghost" size="icon" onClick={clearMessages} title="Gespräch löschen">
             <Trash2 className="h-4 w-4" />
           </Button>
         )}
@@ -57,21 +57,21 @@ export function ChatInterface() {
               <Bot className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <p className="font-semibold text-sm">Ask me anything about our community</p>
-              <p className="text-xs text-muted-foreground mt-1 max-w-xs">
-                I know every member — their skills, interests, and what they&apos;re building. Ask me to find connections, answer questions, or explore the ecosystem.
+              <p className="font-semibold text-base">Frag mich alles über unsere Community</p>
+              <p className="text-sm text-muted-foreground mt-1 max-w-xs">
+                Ich kenne jedes Mitglied — ihre Fähigkeiten, Interessen und woran sie arbeiten. Frag mich nach Verbindungen, Antworten oder erkunde das Ökosystem.
               </p>
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
               {[
-                'Who works with AI?',
-                'Who can help with fundraising?',
-                'What startups are in our community?',
+                'Wer arbeitet mit KI?',
+                'Wer kann beim Fundraising helfen?',
+                'Welche Startups gibt es in unserer Community?',
               ].map((prompt) => (
                 <button
                   key={prompt}
                   onClick={() => { setInput(prompt); }}
-                  className="text-xs px-3 py-1.5 rounded-full border hover:bg-accent transition-colors"
+                  className="text-sm px-3 py-1.5 rounded-full border hover:bg-accent transition-colors"
                 >
                   {prompt}
                 </button>
@@ -83,12 +83,12 @@ export function ChatInterface() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                 <Avatar className="h-7 w-7 flex-shrink-0">
-                  <AvatarFallback className="text-xs">
-                    {msg.role === 'user' ? 'You' : 'AI'}
+                  <AvatarFallback className="text-sm">
+                    {msg.role === 'user' ? 'Du' : 'AI'}
                   </AvatarFallback>
                 </Avatar>
                 <div
-                  className={`rounded-2xl px-4 py-2.5 text-sm max-w-[80%] ${
+                  className={`rounded-2xl px-4 py-2.5 text-base max-w-[80%] ${
                     msg.role === 'user'
                       ? 'bg-primary text-primary-foreground rounded-tr-sm'
                       : 'bg-muted rounded-tl-sm'
@@ -112,7 +112,7 @@ export function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask about the community..."
+            placeholder="Frag etwas über die Community..."
             rows={1}
             className="resize-none"
           />
@@ -120,7 +120,7 @@ export function ChatInterface() {
             <Send className="h-4 w-4" />
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground mt-1.5">Press Enter to send, Shift+Enter for new line</p>
+        <p className="text-sm text-muted-foreground mt-1.5">Enter zum Senden, Shift+Enter für neue Zeile</p>
       </div>
     </div>
   )

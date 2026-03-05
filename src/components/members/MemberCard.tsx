@@ -18,24 +18,24 @@ interface MemberCardProps { member: Member }
 export function MemberCard({ member }: MemberCardProps) {
   return (
     <Link href={`/members/${member.id}`} className="block group">
-      <div className="h-full rounded-3xl border border-border/60 bg-card p-6 transition-all duration-300 hover:border-border hover:shadow-xl hover:shadow-black/[0.06] hover:-translate-y-1 dark:hover:shadow-black/30">
+      <div className="h-full rounded-3xl border border-border/60 bg-card p-6 card-shadow transition-all duration-300 hover:border-border hover:-translate-y-1">
         <div className="flex items-start gap-4 mb-5">
           <Avatar className="h-14 w-14 flex-shrink-0 rounded-2xl">
             <AvatarImage src={member.avatar_url || undefined} alt={member.name} className="object-cover" />
-            <AvatarFallback className="rounded-2xl text-sm font-bold bg-gradient-to-br from-muted to-border">
+            <AvatarFallback className="rounded-2xl text-base font-bold bg-gradient-to-br from-muted to-border">
               {member.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
-            <p className="font-semibold text-[15px] leading-snug truncate">{member.name}</p>
+            <p className="font-semibold text-lg leading-snug truncate">{member.name}</p>
             {member.job_title && (
-              <p className="text-[13px] text-muted-foreground mt-0.5 truncate">{member.job_title}</p>
+              <p className="text-base text-muted-foreground mt-0.5 truncate">{member.job_title}</p>
             )}
           </div>
         </div>
 
         {member.tagline && (
-          <p className="text-[13px] text-muted-foreground italic leading-relaxed mb-4 line-clamp-2">
+          <p className="text-base text-muted-foreground italic leading-relaxed mb-4 line-clamp-2">
             &ldquo;{member.tagline}&rdquo;
           </p>
         )}
@@ -45,7 +45,7 @@ export function MemberCard({ member }: MemberCardProps) {
             {member.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className={`text-[11px] px-2.5 py-1 rounded-full font-semibold capitalize ${TAG_COLORS[tag] || 'bg-muted text-muted-foreground'}`}
+                className={`text-sm px-2.5 py-1 rounded-full font-semibold capitalize ${TAG_COLORS[tag] || 'bg-muted text-muted-foreground'}`}
               >
                 {tag}
               </span>
@@ -56,12 +56,12 @@ export function MemberCard({ member }: MemberCardProps) {
         {member.skills.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {member.skills.slice(0, 3).map((skill) => (
-              <span key={skill} className="text-[11px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium">
+              <span key={skill} className="text-sm px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium">
                 {skill}
               </span>
             ))}
             {member.skills.length > 3 && (
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground/60 font-medium">
+              <span className="text-sm px-2 py-0.5 rounded-full bg-muted text-muted-foreground/60 font-medium">
                 +{member.skills.length - 3}
               </span>
             )}

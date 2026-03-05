@@ -19,7 +19,7 @@ export function serializeMembers(members: Member[]): string {
 }
 
 export function matchmakerPrompt(need: string, membersContext: string): string {
-  return `You are the AI companion for GLC Munich Business Forum — a community of founders, investors, advisors, and startup-interested people.
+  return `You are the AI companion for GLC Business Forum Platform — a community of founders, investors, advisors, and startup-interested people.
 
 A community member needs help. Find the top 3–5 members who can best assist them.
 
@@ -39,7 +39,7 @@ Return ONLY valid JSON. No markdown, no explanation.`
 }
 
 export function opportunitySpotterPrompt(context: string, membersContext: string): string {
-  return `You are the AI companion for GLC Munich Business Forum.
+  return `You are the AI companion for GLC Business Forum Platform.
 
 Analyze this context and identify 3–5 concrete collaboration opportunities, partnerships, or synergies between community members.
 
@@ -60,7 +60,7 @@ Return ONLY valid JSON. No markdown, no explanation.`
 }
 
 export function introduceMePrompt(requesterId: string, requesterName: string, targetId: string, targetName: string, reason: string, membersContext: string): string {
-  return `You are the AI companion for GLC Munich Business Forum. Write a warm, professional introduction email between two community members.
+  return `You are the AI companion for GLC Business Forum Platform. Write a warm, professional introduction email between two community members.
 
 Community context:
 ${membersContext}
@@ -77,7 +77,7 @@ Return ONLY valid JSON. No markdown, no explanation.`
 }
 
 export function forumSuggestPrompt(postTitle: string, postBody: string, membersContext: string): string {
-  return `You are the AI companion for GLC Munich Business Forum.
+  return `You are the AI companion for GLC Business Forum Platform.
 
 A community member posted a question. Identify the top 2 members who are best positioned to answer it based on their skills and expertise.
 
@@ -96,7 +96,7 @@ Return ONLY valid JSON. No markdown, no explanation.`
 }
 
 export function communitySystemPrompt(membersContext: string): string {
-  return `You are the AI Companion for GLC Munich Business Forum — a community of Christian founders, startup enthusiasts, investors, and advisors in Munich.
+  return `You are the AI Companion for GLC Business Forum Platform — a community of Christian founders, startup enthusiasts, investors, and advisors in Munich.
 
 You know every member of the community. Use this knowledge to give personalized, helpful answers.
 

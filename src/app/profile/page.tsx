@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Member } from '@/types'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'My Profile' }
+export const metadata: Metadata = { title: 'Mein Profil' }
 
 export default async function ProfilePage() {
   const supabase = await createClient()
@@ -18,16 +18,16 @@ export default async function ProfilePage() {
     .from('members')
     .select('*')
     .eq('user_id', user.id)
-    .single()
+    .maybeSingle()
 
   if (!member) {
     return (
       <div className="max-w-2xl mx-auto px-6 pt-28 pb-16">
         <Card>
           <CardHeader>
-            <CardTitle>Profile Not Found</CardTitle>
+            <CardTitle>Profil nicht gefunden</CardTitle>
             <CardDescription>
-              Your account doesn&apos;t have a member profile yet. Contact an admin to create one for you.
+              Dein Konto hat noch kein Mitgliederprofil. Kontaktiere einen Admin, um eines für dich zu erstellen.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -48,15 +48,15 @@ export default async function ProfilePage() {
         </Avatar>
         <div>
           <h1 className="text-2xl font-bold">{m.name}</h1>
-          <p className="text-muted-foreground text-sm">{user.email}</p>
+          <p className="text-muted-foreground text-base">{user.email}</p>
         </div>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Edit Profile</CardTitle>
+          <CardTitle>Profil bearbeiten</CardTitle>
           <CardDescription>
-            Update your information so the community can connect with you.
+            Aktualisiere deine Informationen, damit die Community dich finden kann.
           </CardDescription>
         </CardHeader>
         <CardContent>

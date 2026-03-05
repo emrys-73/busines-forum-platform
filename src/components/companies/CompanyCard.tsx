@@ -19,29 +19,29 @@ export function CompanyCard({ company }: CompanyCardProps) {
               </div>
             )}
             <div>
-              <p className="font-semibold text-[15px] leading-snug">{company.name}</p>
-              {company.industry && <p className="text-[13px] text-muted-foreground mt-0.5">{company.industry}</p>}
+              <p className="font-semibold text-lg leading-snug">{company.name}</p>
+              {company.industry && <p className="text-base text-muted-foreground mt-0.5">{company.industry}</p>}
             </div>
           </div>
           <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1" />
         </div>
 
         {company.description && (
-          <p className="text-[13px] text-muted-foreground line-clamp-2 leading-relaxed mb-4">{company.description}</p>
+          <p className="text-base text-muted-foreground line-clamp-2 leading-relaxed mb-4">{company.description}</p>
         )}
 
         <div className="flex items-center gap-3 flex-wrap">
           {company.stage && (
-            <span className="text-[11px] px-2.5 py-1 rounded-full bg-muted text-muted-foreground font-semibold">
+            <span className="text-sm px-2.5 py-1 rounded-full bg-muted text-muted-foreground font-semibold">
               {company.stage}
             </span>
           )}
           {company.founded_year && (
-            <span className="text-[12px] text-muted-foreground">Est. {company.founded_year}</span>
+            <span className="text-[15px] text-muted-foreground">Gegr. {company.founded_year}</span>
           )}
           {company.website_url && (
-            <span className="ml-auto flex items-center gap-1 text-[12px] text-muted-foreground">
-              <Globe className="h-3 w-3" /> Website
+            <span className="ml-auto flex items-center gap-1 text-[15px] text-muted-foreground">
+              <Globe className="h-4 w-4" /> Webseite
             </span>
           )}
         </div>

@@ -24,10 +24,10 @@ export default function EcosystemGraphPage() {
     <div className="max-w-7xl mx-auto px-6 pt-28 pb-16">
       <div className="mb-12 reveal">
         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
-          Ecosystem Graph
+          Ökosystem-Graph
         </h1>
-        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
-          Nodes = community members. Edges = shared skills or interests. Click any node to see their profile.
+        <p className="text-[17px] text-muted-foreground font-normal max-w-2xl">
+          Knoten = Community-Mitglieder. Verbindungen = gemeinsame Fähigkeiten oder Interessen. Klicke auf einen Knoten, um das Profil zu sehen.
         </p>
       </div>
 
@@ -36,7 +36,7 @@ export default function EcosystemGraphPage() {
       ) : graphData ? (
         <EcosystemGraph data={graphData} />
       ) : (
-        <div className="text-center py-16 text-muted-foreground">Failed to load graph data.</div>
+        <div className="text-center py-16 text-muted-foreground">Graph-Daten konnten nicht geladen werden.</div>
       )}
     </div>
   )

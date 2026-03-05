@@ -3,11 +3,13 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ThemeToggle } from './ThemeToggle'
+import { LanguageToggle } from './LanguageToggle'
 import { MobileMenu } from './MobileMenu'
 import { useCurrentMember } from '@/hooks/useCurrentMember'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,28 +21,27 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
 import { ChevronDown } from 'lucide-react'
 
-const navLinks = [
-  { href: '/members', label: 'Members' },
-  { href: '/companies', label: 'Companies' },
-  { href: '/events', label: 'Events' },
-  { href: '/forum', label: 'Forum' },
-]
-
-const toolLinks = [
-  { href: '/tools/matchmaker', label: 'Who Can Help?' },
-  { href: '/tools/chat', label: 'Community Chat' },
-  { href: '/tools/opportunity-spotter', label: 'Opportunities' },
-  { href: '/tools/introduce-me', label: 'Introduce Me' },
-  { href: '/tools/skills-map', label: 'Skills Map' },
-  { href: '/tools/ecosystem-graph', label: 'Ecosystem Graph' },
-  { href: '/tools/analytics', label: 'Analytics' },
-]
-
 export function Navbar() {
   const pathname = usePathname()
   const { member } = useCurrentMember()
   const router = useRouter()
+  const { t } = useTranslation()
   const [scrolled, setScrolled] = useState(false)
+
+  const navLinks = [
+    { href: '/members', label: t('nav.members') },
+    { href: '/companies', label: t('nav.companies') },
+  ]
+
+  const toolLinks = [
+    { href: '/tools/matchmaker', label: t('nav.tools.matchmaker') },
+    { href: '/tools/chat', label: t('nav.tools.chat') },
+    { href: '/tools/opportunity-spotter', label: t('nav.tools.opportunities') },
+    { href: '/tools/introduce-me', label: t('nav.tools.introduce') },
+    { href: '/tools/skills-map', label: t('nav.tools.skillsMap') },
+    { href: '/tools/ecosystem-graph', label: t('nav.tools.ecosystem') },
+    { href: '/tools/analytics', label: t('nav.tools.analytics') },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -64,13 +65,13 @@ export function Navbar() {
           : 'bg-transparent'
       )}
     >
-      <div className="max-w-6xl mx-auto px-6 flex h-12 items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 flex h-14 items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="text-[13px] font-semibold tracking-tight text-foreground hover:opacity-70 transition-opacity"
+          className="text-base font-semibold tracking-tight text-foreground hover:opacity-70 transition-opacity"
         >
-          GLC Munich
+          GLC Business Forum
         </Link>
 
         {/* Nav links — desktop */}
@@ -80,7 +81,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                'px-3 py-1.5 rounded-full text-[13px] transition-all duration-200',
+                'px-3 py-1.5 rounded-full text-base transition-all duration-200',
                 pathname.startsWith(link.href)
                   ? 'text-foreground font-medium'
                   : 'text-muted-foreground hover:text-foreground'
@@ -93,20 +94,20 @@ export function Navbar() {
             <DropdownMenuTrigger asChild>
               <button
                 className={cn(
-                  'flex items-center gap-0.5 px-3 py-1.5 rounded-full text-[13px] transition-all duration-200',
+                  'flex items-center gap-0.5 px-3 py-1.5 rounded-full text-base transition-all duration-200',
                   pathname.startsWith('/tools')
                     ? 'text-foreground font-medium'
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                Tools
-                <ChevronDown className="h-3 w-3 mt-0.5" />
+                {t('nav.tools.label')}
+                <ChevronDown className="h-3.5 w-3.5 mt-0.5" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-52 rounded-2xl p-1.5">
+            <DropdownMenuContent align="center" className="w-56 rounded-2xl p-1.5">
               {toolLinks.map((link) => (
                 <DropdownMenuItem key={link.href} asChild>
-                  <Link href={link.href} className="rounded-xl text-[13px] cursor-pointer">{link.label}</Link>
+                  <Link href={link.href} className="rounded-xl text-base cursor-pointer">{link.label}</Link>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -115,39 +116,48 @@ export function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-2">
+          <LanguageToggle />
           <ThemeToggle />
           {member ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="rounded-full ring-2 ring-transparent hover:ring-border transition-all">
-                  <Avatar className="h-7 w-7">
+                  <Avatar className="h-8 w-8">
                     <AvatarImage src={member.avatar_url || undefined} alt={member.name} />
-                    <AvatarFallback className="text-xs">{member.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback className="text-sm">{member.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 rounded-2xl p-1.5">
-                <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">{member.name}</div>
+              <DropdownMenuContent align="end" className="w-52 rounded-2xl p-1.5">
+                <div className="px-2 py-1.5 text-sm font-medium text-muted-foreground">{member.name}</div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/profile" className="rounded-xl text-[13px] cursor-pointer">My Profile</Link>
+                  <Link href="/profile" className="rounded-xl text-base cursor-pointer">{t('nav.myProfile')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={`/members/${member.id}`} className="rounded-xl text-[13px] cursor-pointer">Public Profile</Link>
+                  <Link href={`/members/${member.id}`} className="rounded-xl text-base cursor-pointer">{t('nav.publicProfile')}</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut} className="rounded-xl text-[13px] text-destructive cursor-pointer">
-                  Sign Out
+                <DropdownMenuItem onClick={handleSignOut} className="rounded-xl text-base text-destructive cursor-pointer">
+                  {t('nav.signOut')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link
-              href="/auth/login"
-              className="hidden md:flex text-[13px] text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Sign In
-            </Link>
+            <div className="hidden md:flex items-center gap-3">
+              <Link
+                href="/auth/login"
+                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {t('nav.signIn')}
+              </Link>
+              <Link
+                href="/auth/signup"
+                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {t('nav.signUp')}
+              </Link>
+            </div>
           )}
           <MobileMenu />
         </div>

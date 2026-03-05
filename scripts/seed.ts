@@ -1,5 +1,5 @@
 /**
- * GLC Munich Business Forum — Database Seed Script
+ * GLC Business Forum Platform — Database Seed Script
  *
  * Prerequisites:
  *   dotenv is not listed in package.json. Install it before running:
@@ -139,12 +139,12 @@ async function seedEvents(): Promise<void> {
   const events = [
     // --- Upcoming event ---
     {
-      title: 'GLC Munich Business Forum — March 2026',
+      title: 'GLC Business Forum Platform — March 2026',
       slug: 'glc-munich-business-forum-march-2026',
       description:
         'Join the Gospel Life Center Munich community for our monthly business forum. This edition features a fireside chat on faith-driven leadership in the AI era, open networking, and a pitch spotlight from two early-stage founders in our community. All are welcome — members and guests alike.',
-      event_date: '2026-03-05T18:00:00+01:00',
-      location: 'Gospel Life Center Munich, Ridlerstraße 57, 80339 München',
+      event_date: '2026-03-05T19:00:00+01:00',
+      location: 'Am Kiesgrund 2-4, Feldkirchen',
       is_upcoming: true,
       recap_body: null,
       recap_images: [],
@@ -152,7 +152,7 @@ async function seedEvents(): Promise<void> {
 
     // --- Past event with recap ---
     {
-      title: 'GLC Munich Business Forum — January 2026',
+      title: 'GLC Business Forum Platform — January 2026',
       slug: 'glc-munich-business-forum-january-2026',
       description:
         'Our first forum of the year brought together founders, investors, and advisors for an evening of connection and conversation around the theme "Faithful Execution".',
@@ -255,7 +255,7 @@ async function seedCompanyMembers(
 // ---------------------------------------------------------------------------
 
 async function main(): Promise<void> {
-  console.log('🌱  GLC Munich Business Forum — Seed Script')
+  console.log('🌱  GLC Business Forum Platform — Seed Script')
   console.log('===========================================')
 
   try {

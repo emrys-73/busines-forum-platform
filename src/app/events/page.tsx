@@ -5,8 +5,8 @@ import { Event } from '@/types'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Events',
-  description: 'Upcoming and past GLC Munich Business Forum events.',
+  title: 'Veranstaltungen',
+  description: 'Kommende und vergangene Veranstaltungen des GLC Business Forums.',
 }
 
 export default async function EventsPage() {
@@ -26,10 +26,10 @@ export default async function EventsPage() {
     <div className="max-w-6xl mx-auto px-6 pt-28 pb-16">
       <div className="mb-12 reveal">
         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
-          Events
+          Veranstaltungen
         </h1>
-        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
-          Join us for monthly business forums bringing together Munich&apos;s faith-driven entrepreneurs.
+        <p className="text-[17px] text-muted-foreground font-normal max-w-2xl">
+          Nimm teil an unseren monatlichen Business-Foren für Münchens glaubensgetriebene Unternehmer.
         </p>
       </div>
 
@@ -45,7 +45,7 @@ export default async function EventsPage() {
 
       {upcoming.length > 1 && (
         <section className="mb-10">
-          <h2 className="text-lg font-semibold mb-4">More Upcoming Events</h2>
+          <h2 className="text-lg font-semibold mb-4">Weitere kommende Veranstaltungen</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {upcoming.slice(1).map((event) => (
               <EventCard key={event.id} event={event} />
@@ -56,7 +56,7 @@ export default async function EventsPage() {
 
       {past.length > 0 && (
         <section>
-          <h2 className="text-lg font-semibold mb-4">Past Events</h2>
+          <h2 className="text-lg font-semibold mb-4">Vergangene Veranstaltungen</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {past.map((event) => (
               <EventCard key={event.id} event={event} />

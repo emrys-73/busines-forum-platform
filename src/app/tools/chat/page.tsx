@@ -11,8 +11,8 @@ export default function ChatPage() {
         <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-bold tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
           Community Chat
         </h1>
-        <p className="text-[17px] text-muted-foreground font-light max-w-2xl">
-          Chat with an AI that knows every member. Ask about skills, find connections, or explore the community.
+        <p className="text-[17px] text-muted-foreground font-normal max-w-2xl">
+          Chatte mit einer KI, die jedes Mitglied kennt. Frage nach Fähigkeiten, finde Verbindungen oder erkunde die Community.
         </p>
       </div>
       <ChatInterface />

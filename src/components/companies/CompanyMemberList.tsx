@@ -20,12 +20,12 @@ export function CompanyMemberList({ members }: CompanyMemberListProps) {
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium">{cm.member?.name}</div>
+              <div className="text-base font-medium">{cm.member?.name}</div>
               {cm.member?.job_title && (
-                <div className="text-xs text-muted-foreground">{cm.member.job_title}</div>
+                <div className="text-sm text-muted-foreground">{cm.member.job_title}</div>
               )}
             </div>
-            <Badge variant="outline" className="text-xs">{cm.role}</Badge>
+            <Badge variant="outline" className="text-sm">{cm.role}</Badge>
           </div>
         </Link>
       ))}

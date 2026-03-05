@@ -38,7 +38,7 @@ export function MatchResult({ match, need }: MatchResultProps) {
       const data = await res.json()
       setEmailDraft(data)
     } catch {
-      setEmailDraft({ subject: 'Could not generate email', body: 'Please try again.' })
+      setEmailDraft({ subject: 'E-Mail konnte nicht generiert werden', body: 'Bitte erneut versuchen.' })
     } finally {
       setLoadingEmail(false)
     }
@@ -46,34 +46,34 @@ export function MatchResult({ match, need }: MatchResultProps) {
 
   return (
     <>
-      <Card className="hover:border-primary/30 transition-all">
-        <CardHeader className="pb-3">
-          <div className="flex items-start gap-3">
-            <Avatar className="h-10 w-10">
-              <AvatarFallback>{match.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+      <Card className="border-0 shadow-lg hover:shadow-xl transition-all rounded-2xl">
+        <CardHeader className="pb-4 p-8">
+          <div className="flex items-start gap-5">
+            <Avatar className="h-14 w-14">
+              <AvatarFallback className="text-lg font-semibold">{match.name.slice(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-sm">{match.name}</span>
-                <span className="flex items-center gap-0.5 text-xs text-amber-500 font-medium">
-                  <Star className="h-3 w-3 fill-current" />
+              <div className="flex items-center gap-3">
+                <span className="font-semibold text-xl">{match.name}</span>
+                <span className="flex items-center gap-1 text-base text-amber-500 font-medium">
+                  <Star className="h-5 w-5 fill-current" />
                   {match.relevance_score}/10
                 </span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">{match.reason}</p>
+              <p className="text-base text-muted-foreground mt-2 leading-relaxed">{match.reason}</p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="pt-0 flex gap-2">
-          <Button asChild size="sm" variant="outline" className="gap-1.5">
+        <CardContent className="pt-0 px-8 pb-8 flex gap-3">
+          <Button asChild variant="outline" className="gap-2 rounded-xl text-base px-5 py-5">
             <Link href={`/members/${match.id}`}>
-              View Profile
-              <ArrowRight className="h-3 w-3" />
+              Profil ansehen
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
-          <Button size="sm" variant="outline" className="gap-1.5" onClick={generateEmail}>
-            <Mail className="h-3 w-3" />
-            Draft Intro Email
+          <Button variant="outline" className="gap-2 rounded-xl text-base px-5 py-5" onClick={generateEmail}>
+            <Mail className="h-5 w-5" />
+            Vorstellungs-E-Mail
           </Button>
         </CardContent>
       </Card>
@@ -81,19 +81,19 @@ export function MatchResult({ match, need }: MatchResultProps) {
       <Dialog open={showEmail} onOpenChange={setShowEmail}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle>Introduction Email Draft</DialogTitle>
+            <DialogTitle>Entwurf Vorstellungs-E-Mail</DialogTitle>
           </DialogHeader>
           {loadingEmail ? (
-            <div className="text-sm text-muted-foreground animate-pulse">Generating email draft...</div>
+            <div className="text-base text-muted-foreground animate-pulse">E-Mail-Entwurf wird generiert...</div>
           ) : emailDraft ? (
             <div className="space-y-3">
               <div>
-                <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Subject</div>
-                <div className="text-sm font-medium">{emailDraft.subject}</div>
+                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1">Betreff</div>
+                <div className="text-base font-medium">{emailDraft.subject}</div>
               </div>
               <div>
-                <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Body</div>
-                <div className="text-sm whitespace-pre-wrap bg-muted rounded-lg p-4">{emailDraft.body}</div>
+                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1">Text</div>
+                <div className="text-base whitespace-pre-wrap bg-muted rounded-lg p-4">{emailDraft.body}</div>
               </div>
               <Button
                 size="sm"
@@ -102,7 +102,7 @@ export function MatchResult({ match, need }: MatchResultProps) {
                   navigator.clipboard.writeText(`Subject: ${emailDraft.subject}\n\n${emailDraft.body}`)
                 }}
               >
-                Copy to Clipboard
+                In Zwischenablage kopieren
               </Button>
             </div>
           ) : null}

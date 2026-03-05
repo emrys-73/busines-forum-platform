@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params
   const supabase = await createClient()
   const { data } = await supabase.from('companies').select('name, description').eq('slug', slug).single()
-  if (!data) return { title: 'Company Not Found' }
+  if (!data) return { title: 'Unternehmen nicht gefunden' }
   return { title: data.name, description: data.description || undefined }
 }
 
@@ -57,9 +57,9 @@ export default async function CompanyPage({ params }: PageProps) {
           <div className="flex flex-wrap gap-2 mt-3">
             {c.stage && <Badge variant="secondary">{c.stage}</Badge>}
             {c.founded_year && (
-              <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1.5 text-base text-muted-foreground">
                 <Calendar className="h-3.5 w-3.5" />
-                Founded {c.founded_year}
+                Gegründet {c.founded_year}
               </span>
             )}
           </div>
@@ -67,7 +67,7 @@ export default async function CompanyPage({ params }: PageProps) {
             <Button asChild size="sm" variant="outline" className="gap-1.5 mt-3">
               <a href={c.website_url} target="_blank" rel="noopener noreferrer">
                 <Globe className="h-3.5 w-3.5" />
-                Visit Website
+                Website besuchen
               </a>
             </Button>
           )}
@@ -76,8 +76,8 @@ export default async function CompanyPage({ params }: PageProps) {
 
       {c.description && (
         <section className="mb-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">About</h2>
-          <p className="text-sm leading-relaxed">{c.description}</p>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Über</h2>
+          <p className="text-base leading-relaxed">{c.description}</p>
         </section>
       )}
 
@@ -85,7 +85,7 @@ export default async function CompanyPage({ params }: PageProps) {
 
       {members.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">Team</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">Team</h2>
           <CompanyMemberList members={members} />
         </section>
       )}
